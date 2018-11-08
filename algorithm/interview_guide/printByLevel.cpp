@@ -59,7 +59,7 @@ Node* reconTreeByLevel(int values[]) {
 	if (NULL != head)
 		q.push(head);
 	Node* node = NULL;
-	while (index < 15) {
+	while (!q.empty()) {
 		node = q.front();
 		node->left = generateNode(values[index++]);
 		node->right = generateNode(values[index++]);
@@ -75,7 +75,7 @@ Node* reconTreeByLevel(int values[]) {
 
 int main() {
 	Node* head = NULL;
-	int values[] = {1, 2, 3, 4, -1, 5, 6, -1, -1, 7, 8, -1, -1, -1, -1};
+	int values[] = {1, 2, 3, 4, -1, 5, 6, -1, -1, 7, 8, -1, -1, -1, -1, -1, -1};
 	head = reconTreeByLevel(values);
 //	head = generateNode(1);
 	printByLevel(head);
