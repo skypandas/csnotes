@@ -38,6 +38,33 @@ void morrisInOrder(Node* head) {
 }
 
 // 先序遍历
+void morrisPreOrder(Node* head) {
+	if (NULL == head)
+		return;
+	Node* cur1 = head;
+	Node* cur2 = NULL;
+	while (NULL != cur1) {
+		cur2 = cur1->left; // 左子树根结点
+		if (NULL != cur2) {
+			// 左子树不空，找到左子数的最右结点
+			while (NULL != cur2->right && cur2->right != cur1) {
+				cur2 = cur2->right;
+			}
+			if (NULL == cur2->right) {
+				cur2->right = cur1;
+				cout << cur1->value << " ";
+				cur1 = cur1->left;
+				continue;
+			} else {
+				cur2->right = NULL;
+			}
+		} else {
+			cout << cur1->value << " ";
+		}
+		cur1 = cur1->right;
+	}
+	cout << endl;
+}
 
 Node* generateNode(int value) {
 	if (-1 == value)
@@ -72,5 +99,6 @@ int main() {
 	int values[] = {4, 2, 6, 1, 3, 5, 7, -1, -1, -1, -1, -1, -1, -1, -1};
 	Node* head = reconByLevel(values);
 	morrisInOrder(head);
+	morrisPreOrder(head);
 	return 0;
 }
