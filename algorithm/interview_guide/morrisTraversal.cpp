@@ -66,6 +66,56 @@ void morrisPreOrder(Node* head) {
 	cout << endl;
 }
 
+// 后序遍历
+Node* reverseEdge(Node* head) {
+	Node *pre = NULL;
+	Node *next = NULL;
+	while (NULL != head) {
+		next = head->right;
+		head->right = pre;
+		pre = head;
+		head = next;
+	}
+	return pre;
+}
+
+void printEdge(Node *head) {
+	Node* tail = reverseEdge(head);
+	Node* cur = tail;
+	while (NULL != cur) {
+		cout << cur->value << " ";
+		cur = cur->right;
+	} 
+	reverseEdge(tail);
+}
+
+void morrisPosOrder(Node* head) {
+	if (NULL == head)
+		return;
+	Node *cur1 = head;
+	Node *cur2 = NULL;
+
+	while (NULL != cur1) {
+		cur2 = cur1->left;
+		if (NULL != cur2) {
+			while (NULL != cur2->right && cur2->right != cur1) {
+				cur2 = cur2->right;
+			}
+			if (NULL == cur2->right) {
+				cur2->right = cur1;
+				cur1 = cur1->left;
+				continue;
+			} else {
+				cur2->right = NULL;
+				printEdge(cur1->left);
+			}
+		}
+		cur1 = cur1->right;
+	}
+	printEdge(head);
+	cout << endl;
+}
+
 Node* generateNode(int value) {
 	if (-1 == value)
 		return NULL;
@@ -100,5 +150,6 @@ int main() {
 	Node* head = reconByLevel(values);
 	morrisInOrder(head);
 	morrisPreOrder(head);
+	morrisPosOrder(head);
 	return 0;
 }
